@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bienvenido</title>
+    <link rel="stylesheet" href="css/hola.css" type="text/css">
+  </head>
+  <body ng-app="firstApp">
+    <!-- <img src="images/hola.jpg" alt="Hola">
+    <p>Bienvenido a Aprendiendo AngularJS. Durante el tiempo que estudies este libro vas a tener la oppurtunidad de apprender comor hacer applicaciones con AngularJS. Distruta!</p> -->
+    <div ng-controller="FirstController">
+      <span>Name:</span>
+      <input type="text" ng-model="first">
+      <input type="text" ng-model="last">
+      <button ng-click="updateMessage()">Message</button>
+      <hr>
+      {{ heading + message }}
+    </div>
+
+    <script type="text/javascript" src="http://code.angularjs.org/1.2.9/angular.min.js"></script>
+    <script type="text/javascript" src="js/first.js"></script>
+  </body>
+</html>
