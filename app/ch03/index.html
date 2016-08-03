@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AngularJS Dependency Injection</title>
+    <link rel="stylesheet" href="css/app.css" type="text/css">
+  </head>
+  <body ng-app="myApp">
+    <h1>AngularJS Dependency Injection</h1>
+    <div ng-controller="controllerA">
+      <h2>{{message}}</h2>
+    </div>
+    <hr>
+    <div ng-controller="controllerB">
+      <h2>{{message}}</h2>
+    </div>
+    <hr>
+    <div ng-controller="controllerC">
+      <h2>{{configTime}}</h2>
+      <h2>{{runTime}}</h2>
+    </div>
+    <hr>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+  </body>
+</html>
