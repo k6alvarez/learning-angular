@@ -66,7 +66,9 @@
         </div>
         <h4>twitter.com/{{ lowercasehandle() }}</h4>
         <ul>
-          <li ng-repeat="rule in rules"></li>
+          <li ng-repeat="rule in rules">
+            {{ rule.rulename }}
+          </li>
         </ul>
       </div>
 

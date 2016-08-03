@@ -42,4 +42,10 @@ myApp.controller('mainController', ['$scope', '$log', '$filter', '$resource', '$
 
   $scope.characters = 5;
 
+  $scope.rules = [
+    { rulename: "rule 1", severity="death"},
+    { rulename: "rule 2", severity="forgiveness"},
+    { rulename: "rule 3", severity="wealth"}
+  ]
+
 }]);
