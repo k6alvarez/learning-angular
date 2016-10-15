@@ -1,51 +1,64 @@
-var myApp = angular.module('myApp' ,['ngMessages', 'ngResource']);
+var myApp = angular.module('myApp' ,['ngMessages', 'ngResource', 'ngRoute']);
 
-// myApp.controller('mainController', function($scope, $log, $filter, $resource){
-//   //new controller created
-//
-//   //scope service
-//   $scope.name = 'Juan Alvarez';
-//   $scope.occupation = 'Farmer';
-//
-//   //angular $log service
-//   $log.log("hola");
-//   $log.info("Some Information");
-//   $log.debug("Debug info for my code.");
-//   $log.warn("Ay pendejo, te doy un warning");
-//   $log.error("You fucked up big time man.");
-//
-//   //angular $resource module for interacting with RESTful services.
-//   $log.log($resource);
-//
-//
-//
-// });
+myApp.config(function ($routeProvider){
+  //lets us specify routes based on the hash in the url
+  $routeProvider
+    .when('/', {
+      templateUrl: 'pages/main.html',
+      controller: 'mainController'
+    })
+    .when('/second/',{
+      templateUrl: 'pages/second.html',
+      controller: 'secondController'
+    })
+    .when('/second/:num',{
+      templateUrl: 'pages/second.html',
+      controller: 'secondController'
+    })
+})
 
-// always use this version of dependency injections so that minifiers don't
-// break your code. Angular will match the elements of the array with the
-// parameters of the function so that must be in the same order.
-myApp.controller('mainController', ['$scope', '$log', '$filter', '$resource', '$timeout', function($scope, $log, $filter, $resource, $timeout){
+//service - singleton object that will contain properties or functions
+//use services to share content across pages
+myApp.service('nameService', function() {
+  var self = this;
+  this.name = 'Jon Doe';
 
-  //scope service
-  $scope.name = 'Juan Alvarez';
-  $scope.occupation = 'Farmer';
-
-  $timeout(function () {
-    $scope.name = 'Speedy Gonzalez';
-  }, 1500);
-
-  $scope.handle = '';
-
-  $scope.lowercasehandle = function () {
-    return $filter('lowercase')($scope.handle)
+  this.nameLength = function() {
+    return self.name.length;
   }
+});
 
-  $scope.characters = 5;
+myApp.controller('mainController', ['$scope', '$location', '$log', '$filter', '$resource', '$timeout', '$http', 'nameService', function($scope, $location, $log, $filter, $resource, $timeout, $http, nameService){
 
-  $scope.rules = [
-    { rulename: "rule 1", severity="death"},
-    { rulename: "rule 2", severity="forgiveness"},
-    { rulename: "rule 3", severity="wealth"}
-  ]
+  $scope.name = "mainController";
+  $scope.name = nameService.name;
+
+  $log.main = 'Property from main';
+  $log.log($log);
+  $log.log($scope);
+  $log.log(nameService.name);
+  $log.log(nameService.nameLength());
+  // $log.info($location.path());
+
+  $scope.$watch('name', function(){
+    nameService.name = $scope.name;
+  });
+
+}]);
+
+myApp.controller('secondController', ['$scope', '$location', '$log', '$filter', '$resource', '$timeout', '$http', '$routeParams', 'nameService', function($scope, $location, $log, $filter, $resource, $timeout, $http, $routeParams, nameService){
+
+  $scope.name = "secondController";
+  $scope.num = $routeParams.num || 'no number';
+  $scope.name = nameService.name;
+
+  $log.second = 'Property from second';
+  $log.log($log);
+  $log.log($scope);
+  // $log.info($location.path());
+
+  $scope.$watch('name', function(){
+    nameService.name = $scope.name;
+  });
 
 }]);
