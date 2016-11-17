@@ -15,6 +15,14 @@ myApp.config(function ($routeProvider){
       templateUrl: 'pages/second.html',
       controller: 'secondController'
     })
+    .when('/weather',{
+      templateUrl: 'weather/index.html',
+      controller: 'weatherAppController'
+    })
+    .when('/forecast',{
+      templateUrl: 'weather/forecast.html',
+      controller: 'forcastController'
+    })
 })
 
 //service - singleton object that will contain properties or functions
@@ -61,4 +69,44 @@ myApp.controller('secondController', ['$scope', '$location', '$log', '$filter', 
     nameService.name = $scope.name;
   });
 
+}]);
+
+
+
+// WEATHER APP
+myApp.service('weatherAppCity',function(){
+  var self = this;
+  this.city = 'Atlanta';
+});
+
+
+myApp.controller('weatherAppController',['$scope', '$location', '$log', '$filter', '$resource', '$timeout', '$http', '$routeParams', 'weatherAppCity', function($scope, $location, $log, $filter, $resource, $timeout, $http, $routeParams, weatherAppCity){
+  $scope.name = "weatherAppController";
+  $scope.city = weatherAppCity.city;
+
+  $scope.$watch('city', function(){
+    weatherAppCity.city = $scope.city;
+  });
+}]);
+
+myApp.controller('forcastController',['$scope', '$location', '$log', '$filter', '$resource', '$timeout', '$http', '$routeParams', 'weatherAppCity', function($scope, $location, $log, $filter, $resource, $timeout, $http, $routeParams, weatherAppCity){
+  $scope.name = "forcastController";
+  $scope.city = weatherAppCity.city;
+
+  $scope.weatherApi = $resource("http://api.openweathermap.org/data/2.5/weather", {
+    callback: "JSON_CALLBACK"}, {get: {method: "JSONP"}});
+
+  $scope.weatherResult = $scope.weatherApi.get({ q: $scope.city, appid: "0dd966742747c035e481e0b239ebfae8" });
+
+  $scope.convertToFahrenheit = function(degK) {
+    return Math.round((1.8 * (degK - 273)) + 32);
+  };
+
+  $scope.convertToDate = function(dt) {
+    return new Date(dt * 1000);
+  };
+
+  $scope.$watch('city', function(){
+    weatherAppCity.city = $scope.city;
+  });
 }]);

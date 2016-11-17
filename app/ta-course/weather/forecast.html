@@ -1,0 +1,20 @@
+<!-- <h1>This is {{ name }}</h1>
+<input type="text" name="" id="" ng-model="name"> -->
+<h1>Weather Forecast for {{ city }}</h1>
+<div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            {{ convertToDate(weatherResult.dt) | date }}
+          </h3>
+        </div>
+        <div class="panel-body">
+          <p>Current Temperature: {{ convertToFahrenheit(weatherResult.main.temp) }}</p>
+          <p>Humidity: {{ weatherResult.main.humidity }}%</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
